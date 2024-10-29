@@ -1,0 +1,18 @@
+{
+  "short_name": "Marketing Toolkit",
+  "name": "Marketing Toolkit: Compartiendo Archivos",
+  "display": "standalone",
+  "background_color": "#162144", 
+  "id": "/?source=pwa",
+  "start_url": "/marketing-toolkit/index.php",
+  "icons": [
+      {
+          "src": "apple-touch-icon.png",
+          "sizes": "any",
+          "type": "image/png",
+          "purpose": "any"
+      }
+  ]
+}
+
+  
