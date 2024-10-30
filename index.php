@@ -1,3 +1,13 @@
+<?php
+error_reporting(0);
+session_start();
+
+if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
+    header("Location: toolkit.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,9 +35,11 @@
  <div class="container-centro">
  <div class="centro">
 <a href="login.php"class="btn btn-primary btn-ingresar"> Ingresar </a> 
+
 </div> 
 </div>
- <!-- ====================  BEGIN: initialize add-to-homescreen library  ==================== -->
+
+ <!-- ====================  BEGIN: initialize add-to-homescreen library  ==================== 
 
     <script>
       window.addEventListener("load", function () {
@@ -42,7 +54,7 @@
         window.AddToHomeScreenInstance.show("es"); // popup is only shown if web app is not already added to homescreen
       });
     </script>
-  <!--  ====================  END: initialize add-to-homescreen library  ==================== -->
+  ====================  END: initialize add-to-homescreen library  ==================== -->
  
 </body>
 </html>

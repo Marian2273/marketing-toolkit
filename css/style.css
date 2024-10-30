@@ -225,10 +225,10 @@ main {
 .promo-item {
     border-radius: 10px;
     display: flex;
-     min-width: 180px !important;
-    padding: 1.3rem 1rem;
+     min-width: 200px !important;
     align-items: center;
     margin-right: 1rem;
+    
    
  
 }
@@ -1134,27 +1134,65 @@ width: 80%;
 
 .articulos .promo-info a{
     color: #fff;
-    background-color: red;
-    margin-top: 50px;
+    background-color: transparent;
+    margin-top: 20px;
+    margin-bottom: 20px;
     float: left;
     width: 100%;
 }
+.articulos .nota-img{
+    width: 200px;  /* Establece el ancho */
+    height: 200px; /* Establece la misma altura para hacerla cuadrada */
+    object-fit: cover;  /* Ajusta la imagen para llenar el cuadro */
+}
+.articulos .btn-nota{
+    font-size: 15px;
+    font-weight: 300;
+    border-radius: 26px;
+    -webkit-border-radius: 26px;
+    -moz-border-radius: 26px;
+    -ms-border-radius: 26px;
+    -o-border-radius: 26px;
+    border:1px solid #fff;
+    text-align: center;
+    padding: 10px;
+}
 .favoritos .promo-item{
-    background-repeat: no-repeat;
-    border: 1px solid #0635af;
+    border-radius: 10px;
 }
 .favoritos .promo-item img{
     width: 100%;
 }
-
+.favoritos .img-responsive{
+    border-radius: 10px;
+}
 .favoritos .seccion-compartir{
     float: left;
     width: 100%;
 
 }
+.favoritos .promo-item p{
+    
+    font-size: 13px;
+    font-weight: 300;
+    height: 40px;
+    text-align: center;
+
+}
+.favoritos .seccion-compartir {
+ padding-left: 20px;
+}
 .favoritos .seccion-compartir .compartir{
     float: left;
     width: 25px;
-    margin: 10px 0px 10px 18px;
+    margin: 10px 15px ;
 
 } 
+.search .btn-buscar{
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.search span{
+font-size: 28px;
+}

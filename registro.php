@@ -1,9 +1,21 @@
+<?php
+session_start();
+
+// Verificar si el usuario ya está logueado, y redirigirlo en ese caso
+if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
+    header("Location: toolkit.php");
+    exit();
+}
+
+// Código de lógica de registro aquí...
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"/>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Marketing Toolkit</title>
     <link rel="manifest" crossorigin="use-credentials" href="manifest.json" />
     <link rel="stylesheet" href="dist/add-to-homescreen.min.css" />

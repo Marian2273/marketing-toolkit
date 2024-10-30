@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("../config/connect1.php");
-
+error_reporting(0);
 /*
 echo "<pre>";
 print_r($_POST);
@@ -44,13 +44,26 @@ if($captchaResponse['success'] == '1'
     if($numRows  == 1){
       $row = mysqli_fetch_assoc($rs);
       if(password_verify($password,$row['password'])){
-        
-       // ini_set("session.cookie_lifetime",0);  
-        //ini_set('session.cookie_httponly', 1);
-        $_SESSION["user_toolkit"]= $row['id'];
-        $user_toolkit=$_SESSION["user_toolkit"];
-        session_regenerate_id();
-        echo  'true' ;
+        // Configuración de la cookie de sesión para duración prolongada
+    session_set_cookie_params([
+      'lifetime' => 31536000, // 1 año en segundos
+      'path' => '/',
+      'secure' => true, // Solo para HTTPS, asegúrate de que tu sitio esté en HTTPS
+      'httponly' => true, // Previene accesos de JavaScript para mayor seguridad
+      'samesite' => 'Strict' // Evita que se envíe en solicitudes externas
+  ]);
+
+  // Iniciar la sesión después de configurar los parámetros
+  session_start();
+
+  // Guardar la información del usuario en la sesión
+  $_SESSION["user_toolkit"] = $row['id'];
+  $user_toolkit = $_SESSION["user_toolkit"];
+
+  // Regenerar el ID de sesión para mayor seguridad
+  session_regenerate_id();
+
+  echo 'true';
 }
 else{
 echo 'La clave es incorrecta';

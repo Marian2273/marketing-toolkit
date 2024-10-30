@@ -1,3 +1,12 @@
+<?php
+error_reporting(0);
+session_start();
+
+if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
+    header("Location: toolkit.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

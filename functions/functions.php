@@ -1,7 +1,6 @@
 <?php
 session_start();
 header("X-XSS-Protection: 1"); 
-
 error_reporting(0);
 /*
 error_reporting(E_ERROR | E_PARSE);
@@ -34,12 +33,10 @@ $host = $config['host'];
 $host_usuario= $config['user'];
 $host_pass= $config['pass'];
 $host_port= $config['port'];
-
 $site_url= $config['url'];
 
 
 // Sanitizador 
-
 use voku\helper\AntiXSS;
 require_once __DIR__ . '/vendor/autoload.php'; // example path
 $antiXss = new AntiXSS();
@@ -65,7 +62,6 @@ if (!function_exists('get_user_info')) {
     }
 }
  // Funcion para desloguear al que paso de 1 a 0
-
  if (!function_exists('get_user_activo')) {
     function get_user_activo($id) {
         global $mysqli;
@@ -84,6 +80,66 @@ if (!function_exists('get_user_info')) {
             }
     }
 }
+
+//Seccion favoritos
+if (!function_exists('get_favoritos')) {
+    function get_favoritos() {
+        global $mysqli;
+        $id = $id;
+      
+
+        $query = "SELECT * FROM archivos";
+        $result = mysqli_query($mysqli, $query);
+      
+        while ($row = mysqli_fetch_assoc($result)) {
+            
+            echo '    <div class="promo-item" >
+                  
+            <div class="promo-info">
+                <img src="'.$row['imagen'] .'" class="img-responsive" />
+                <p>'. $row['nombre'] .'</p>
+                <div class="seccion-compartir">
+                    <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20http://localhost:8888/marketing-toolkit/'.$row['link'] .'" target="_blank">
+                        <img src="img/whatsapp_icon.png" class="compartir" />
+                    </a>
+                    <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
+                    <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
+                </div>
+            </div>
+        </div>';
+
+        }
+
+    }
+}
+
+//Seccion Notas Blog
+if (!function_exists('get_notas')) {
+    function get_notas() {
+        global $mysqli;
+        $id = $id;
+      
+
+        $query = "SELECT * FROM notas";
+        $result = mysqli_query($mysqli, $query);
+      
+        while ($row = mysqli_fetch_assoc($result)) {
+            
+            echo '    <div class="promo-item" >
+                  
+            <div class="promo-info">
+                <img src="'.$row['imagen'] .'" class="nota-img" />
+                <p>'. $row['nombre'] .'</p>
+                <a href="'. $row['link'] .'" class="btn-nota"  target="_blank"> Ir a la Nota </a>
+               
+            </div>
+        </div>';
+
+        }
+
+    }
+}
+/*
 //Send Notification
 if (!function_exists('send_notification')) {
     function send_notification($id_user, $mail_tem, $sec_code, $subject, $smtp, $userName,$pass, $port, $url) {

@@ -20,6 +20,33 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="js/jquery.min.js"></script>
 <!-- //js -->
+<script>
+// Escuchar el evento 'keydown' en el campo de entrada
+document.getElementById('busqueda').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {  // Detecta la tecla Enter
+        event.preventDefault();   // Evita el comportamiento predeterminado
+        buscar();                 // Llama a la función buscar
+    }
+});
+
+function buscar() {
+    const query = document.getElementById('busqueda').value;
+
+    // Crear la petición AJAX
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'buscar.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function () {
+        if (this.status === 200) {
+            document.getElementById('resultados').innerHTML = this.responseText;
+        }
+    };
+
+    // Enviar los datos de la búsqueda
+    xhr.send('query=' + encodeURIComponent(query));
+}
+</script>
 </head>
 
 <body class="toolkit">
@@ -33,8 +60,9 @@
         </nav> 
 
         <div class="search">
-            <span class="las la-search"></span>
-            <input type="text" placeholder="Buscador">
+        
+            <input type="text" placeholder="Buscador" id="busqueda">
+            <button class="btn-buscar" onclick="buscar()"><span class="las la-search"></span></button>
         </div>
 
     </header>
@@ -43,80 +71,89 @@
 <div class="favoritos section-wrapper">
         <div class="promo">
             <h3 class="fav">  <span class="las la-heart"></span> Favoritos </h3>
-            <div class="items promo-items">
-                <div class="promo-item">
-                  
-                    <div class="promo-info">
-                            <img src="preview/preview-pdf.png" class="img-responsive" />
-                            <p>Minframe Caso de éxito</p>
-                            <div class="seccion-compartir">
-                            <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank"><img src="img/whatsapp_icon.png" class="compartir" /></a>
-                            <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
-                            <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
-                            </div>
-                    </div>
-                </div>
+            <div class="items promo-items" id="resultados">
+               <?php get_favoritos(); ?>
 
-                <div class="promo-item">
-                  
+                <div class="promo-item" >
+              <!--    
                     <div class="promo-info">
-                        <img src="preview/preview-pdf.png" class="img-responsive" />
-                        <p>Minframe Caso de éxito</p>
+                        <img src="preview/preview-opti.png" class="img-responsive" />
+                        <p> Pitch OPTI CEP </p>
                         <div class="seccion-compartir">
-                            <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank"><img src="img/whatsapp_icon.png" class="compartir" /></a>
+                            <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank">
+                                <img src="img/whatsapp_icon.png" class="compartir" />
+                            </a>
                             <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
                             <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
                         </div>
                     </div>
                 </div>
                
+                <div class="promo-item">
+                  
+                  <div class="promo-info">
+                      <img src="preview/preview-centron.png" class="img-responsive" />
+                      <p>Pitch Centreon ACU</p>
+                      <div class="seccion-compartir">
+                          <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank"><img src="img/whatsapp_icon.png" class="compartir" /></a>
+                          <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
+                          <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
+                      </div>
+                  </div>
+              </div>
 
+
+              <div class="promo-item">
+                  
+                  <div class="promo-info">
+                      <img src="preview/preview-data.png" class="img-responsive" />
+                      <p>Data Governance & Privacy ACU</p>
+                      <div class="seccion-compartir">
+                          <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank">
+                              <img src="img/whatsapp_icon.png" class="compartir" />
+                          </a>
+                          <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
+                          <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
+                      </div>
+                  </div>
+              </div>
+ <div class="promo-item">
+                  
+                  <div class="promo-info">
+                      <img src="preview/preview-servicios.png" class="img-responsive" />
+                      <p> IT Patagonia Servicios ACU</p>
+                      <div class="seccion-compartir">
+                          <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank">
+                              <img src="img/whatsapp_icon.png" class="compartir" />
+                          </a>
+                          <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
+                          <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
+                      </div>
+                  </div>
+              </div>
+
+    -->
+              
             </div>
         </div>
     </div>
 </div>    
 <!-- ..// Fin de Favoritos -->
 <!-- Articulos -->
-<div class="articulos section-wrapper" >
+<div class="articulos section-wrapper favoritos" >
     <div class="promo">
         <div class="">
             <h3 class="fav"><span class="las la-file-alt"></span> Últimos artículos</h3>
-            <a href="" class="btn btn-primary btn-tags mas">+ artículos</a>
+            <a href="https://itpatagonia.com/blog/" class="btn btn-primary btn-tags mas" target="_blank" >+ artículos</a>
         </div>
         
         
             <div class="items promo-items pdf">
-            <div class="promo-item" style="background-image: url(preview/preview-pdf.png)">
-                    <div class="promo-info">
-                    
-                     
-                        <a href="">Caso de éxito</a>
-                    </div>
-                </div>
-                <div class="promo-item" style="background-image: url(preview/preview-pdf.png)">
-                    <div class="promo-info">
-                    
-                       
-                        <a href="">Compartir</a>
-                    </div>
-                </div>
+            <?php get_notas();?>
+           
+             
 
-                <div class="promo-item" style="background-image: url(preview/preview-pdf.png)">
-                    <div class="promo-info">
-                    
-                        
-                        <a href="">Compartir</a>
-                    </div>
-                </div>
 
-                <div class="promo-item" style="background-image: url(preview/preview-pdf.png)">
-                    <div class="promo-info">
-                    
-                        
-                        <a href="">Compartir</a>
-                    </div>
-                </div>
-               
 
             </div>
     </div>  
