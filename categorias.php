@@ -73,95 +73,18 @@ function buscar() {
     <!-- Favoritos -->
 <div class="favoritos section-wrapper">
         <div class="promo">
-            <h3 class="fav">  <span class="las la-heart"></span> Favoritos </h3>
+            <h3 class="fav titulo-categorias"> <img src="img/Iconos_Botonera-19.png" class="icono-categoria"/> <span> Archivos </span> </h3>
             <div class="items promo-items" id="resultados">
                <?php get_favoritos(); ?>
 
-                <div class="promo-item" >
-              <!--    
-                    <div class="promo-info">
-                        <img src="preview/preview-opti.png" class="img-responsive" />
-                        <p> Pitch OPTI CEP </p>
-                        <div class="seccion-compartir">
-                            <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank">
-                                <img src="img/whatsapp_icon.png" class="compartir" />
-                            </a>
-                            <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
-                            <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
-                        </div>
-                    </div>
-                </div>
-               
-                <div class="promo-item">
-                  
-                  <div class="promo-info">
-                      <img src="preview/preview-centron.png" class="img-responsive" />
-                      <p>Pitch Centreon ACU</p>
-                      <div class="seccion-compartir">
-                          <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank"><img src="img/whatsapp_icon.png" class="compartir" /></a>
-                          <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
-                          <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
-                      </div>
-                  </div>
-              </div>
-
-
-              <div class="promo-item">
-                  
-                  <div class="promo-info">
-                      <img src="preview/preview-data.png" class="img-responsive" />
-                      <p>Data Governance & Privacy ACU</p>
-                      <div class="seccion-compartir">
-                          <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank">
-                              <img src="img/whatsapp_icon.png" class="compartir" />
-                          </a>
-                          <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
-                          <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
-                      </div>
-                  </div>
-              </div>
- <div class="promo-item">
-                  
-                  <div class="promo-info">
-                      <img src="preview/preview-servicios.png" class="img-responsive" />
-                      <p> IT Patagonia Servicios ACU</p>
-                      <div class="seccion-compartir">
-                          <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20<?php echo urlencode($archivoUrl); ?>" target="_blank">
-                              <img src="img/whatsapp_icon.png" class="compartir" />
-                          </a>
-                          <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
-                          <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
-                      </div>
-                  </div>
-              </div>
-
-    -->
-              
+            
             </div>
         </div>
     </div>
 </div>    
 <!-- ..// Fin de Favoritos -->
-<!-- Articulos -->
-<div class="articulos section-wrapper favoritos" >
-    <div class="promo">
-        <div class="">
-            <h3 class="fav"><span class="las la-file-alt"></span> Últimos artículos</h3>
-            <a href="https://itpatagonia.com/blog/" class="btn btn-primary btn-tags mas" target="_blank" >+ artículos</a>
-        </div>
-        
-        
-            <div class="items promo-items pdf">
-            <?php get_notas();?>
-           
-             
 
-
-
-            </div>
-    </div>  
-</div>
-<!-- ..// fin articulos -->
+         
 
 <!-- Categorias -->
 <div class="categorias section-wrapper" >
@@ -248,8 +171,9 @@ function buscar() {
 <!-- ..// fin popular tags -->
 
 </main>
-<?php include('includes/nav-footer.php'); ?>
 
+
+<?php include('includes/nav-footer.php'); ?>
     <script>
    // Selecciona todos los botones de "like" en la página
         document.querySelectorAll('.like-btn').forEach(button => {

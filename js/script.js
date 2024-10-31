@@ -1,30 +1,24 @@
+document.getElementById('like-btn').addEventListener('click', function() {
+    const heart = document.getElementById('heart');
+    const postId = this.getAttribute('data-postid');
+    const userId = this.getAttribute('data-userid');
+    
+    heart.classList.toggle('liked');
 
-$(document).ready(function(){
+    const liked = heart.classList.contains('liked') ? 1 : 0;
 
-
-	/* ---- Countdown timer ---- */
-
-	$('#counter').countdown({
-		timestamp : (new Date()).getTime() + 11*24*60*60*1000
-	});
-
-
-	/* ---- Animations ---- */
-
-	$('#links a').hover(
-		function(){ $(this).animate({ left: 3 }, 'fast'); },
-		function(){ $(this).animate({ left: 0 }, 'fast'); }
-	);
-
-	$('footer a').hover(
-		function(){ $(this).animate({ top: 3 }, 'fast'); },
-		function(){ $(this).animate({ top: 0 }, 'fast'); }
-	);
-
-
-	
-
-	
-
-
+    fetch('like.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ postId, userId, liked })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Like updated successfully');
+        } else {
+            console.error('Failed to update like');
+        }
+    })
+    .catch(error => console.error('Error:', error));
 });

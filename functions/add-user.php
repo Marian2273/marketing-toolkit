@@ -1,12 +1,13 @@
 <?php
 header("X-XSS-Protection: 1"); 
 error_reporting(0);
-include("../config/connect1.php"); 
-
 // Sanitizador 
 use voku\helper\AntiXSS;
 require_once __DIR__ . '/vendor/autoload.php'; // example path
 $antiXss = new AntiXSS();
+include("../config/connect1.php"); 
+
+
 
 /*
 print_r($_POST);

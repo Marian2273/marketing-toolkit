@@ -678,7 +678,7 @@ input[type="Password"] {
     padding: 10px 15px;
     cursor: pointer;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     border-radius: 26px;
     -webkit-border-radius: 26px;
     -moz-border-radius: 26px;
@@ -733,10 +733,10 @@ input[type="Password"] {
 
 .w3_info h2 {
     display: inline-block;
-    font-size: 23px;
-    line-height: 32px;
+    font-size: 22px;
+    line-height: 27px;
     margin-bottom: 30px;
-    font-weight: 700;
+    font-weight: 500;
     color: #1eb2e0;
 }
 .w3_info h4 {
@@ -768,7 +768,6 @@ h1 {
     box-sizing: border-box;
     padding: 10px;
     width: auto;
-   
     box-shadow: 2px 9px 49px -17px rgba(0, 0, 0, 0.1);
 }
 
@@ -788,15 +787,16 @@ p.account a {
     text-align: center;
     padding-top: 20px;
     padding-bottom: 0px;
-    font-size: 18px;
+    font-size: 17px;
     color: #fff;
+    font-weight: 300;
 }
 p.aclaracion,
 p.aclaracion a {
     text-align: center;
     padding-top: 20px;
     padding-bottom: 0px;
-    font-size: 16px;
+    font-size: 15px;
     color: #fff;
 }
 p.account a {
@@ -815,7 +815,7 @@ a.forgot {
     width: 100%;
     float: left;
     text-align: center;
-    font-weight: 500;
+    font-weight: 400;
     margin-top: 35px;
     margin-bottom: 10px;
     
@@ -994,7 +994,7 @@ span.fab{
     padding-left: 4px;
   
 }
-#add_err{
+#add_err, #add_err2{
     color: #f35720;
     
     margin: auto;
@@ -1135,10 +1135,11 @@ width: 80%;
 .articulos .promo-info a{
     color: #fff;
     background-color: transparent;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 20px;
     float: left;
-    width: 100%;
+    width: 90%;
+    margin-left: 10px;
 }
 .articulos .nota-img{
     width: 200px;  /* Establece el ancho */
@@ -1195,4 +1196,32 @@ width: 80%;
 }
 .search span{
 font-size: 28px;
+}
+p.blanco a {
+    color: #fff!important;
+    font-weight: 300;
+}
+.like-btn{
+background: none;
+border: none;
+padding:4px 10px;
+}
+.heart {
+    font-size: 26px;
+    color: #18B4DF;
+    cursor: pointer;
+    margin-top: 4px;
+}
+
+.liked {
+    color: #fff;
+}
+
+/* Categoria */
+
+.icono-categoria{
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    float: left;
 }

@@ -43,6 +43,41 @@ $antiXss = new AntiXSS();
 
 
 
+// Determina la sección basada en la URL
+$iconos = [
+    'toolkit' => [
+        'azul' => 'img/Iconos_Botonera-17.png',
+        'blanco' => 'img/Iconos_Botonera-21.png',
+         'link' => 'toolkit.php'
+    ],
+    'perfil' => [
+        'azul' => 'img/Iconos_Botonera-18.png',
+        'blanco' => 'img/Iconos_Botonera-22.png',
+         'link' => 'functions/logout.php'
+    ],
+    'categorias' => [
+        'azul' => 'img/Iconos_Botonera-19.png',
+        'blanco' => 'img/Iconos_Botonera-23.png',
+         'link' => 'categorias.php'
+    ],
+    'notas' => [
+        'azul' => 'img/Iconos_Botonera-20.png',
+        'blanco' => 'img/Iconos_Botonera-24.png',
+         'link' => 'notas.php'
+    ]
+];
+
+$seccion = 'toolkit'; // Default
+if (strpos($_SERVER['REQUEST_URI'], 'categorias') !== false) {
+    $seccion = 'categorias';
+} elseif (strpos($_SERVER['REQUEST_URI'], 'perfil') !== false) {
+    $seccion = 'perfil';
+} elseif (strpos($_SERVER['REQUEST_URI'], 'notas') !== false) {
+    $seccion = 'notas';
+}
+
+
+
 
 //Get User Info
 if (!function_exists('get_user_info')) {
@@ -85,8 +120,8 @@ if (!function_exists('get_user_info')) {
 if (!function_exists('get_favoritos')) {
     function get_favoritos() {
         global $mysqli;
-        $id = $id;
-      
+        $user_toolkit=$_SESSION["user_toolkit"];
+       
 
         $query = "SELECT * FROM archivos";
         $result = mysqli_query($mysqli, $query);
@@ -99,11 +134,14 @@ if (!function_exists('get_favoritos')) {
                 <img src="'.$row['imagen'] .'" class="img-responsive" />
                 <p>'. $row['nombre'] .'</p>
                 <div class="seccion-compartir">
-                    <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20http://localhost:8888/marketing-toolkit/'.$row['link'] .'" target="_blank">
+                    <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20https://freecanelo.com.ar/marketing-toolkit/'.$row['link'] .'" target="_blank">
                         <img src="img/whatsapp_icon.png" class="compartir" />
                     </a>
-                    <a href=""><img src="img/envelope_email_icon.png" class="compartir" /></a>
-                    <a href=""><img src="img/fav-negro.png" class="compartir" /></a>
+                     <a href="mailto:?subject=Te Comparto este Artículo&body=' . urlencode('https://freecanelo.com.ar/marketing-toolkit/' . $row['link']) . '" target="_blank"><img src="img/envelope_email_icon.png" class="compartir" /></a>
+                    <button class="like-btn" id="like-btn" data-postid="'. $row['id'] .'" data-userid="'. $user_toolkit .'">
+                    <span id="heart" class="heart las la-heart"> </span> <!-- Corazón vacío -->
+                    </button>
+
                 </div>
             </div>
         </div>';
@@ -139,6 +177,84 @@ if (!function_exists('get_notas')) {
 
     }
 }
+
+
+//Seccion Notas Blog
+if (!function_exists('get_tags')) {
+    function get_tags() {
+        global $mysqli;
+        $id = $id;
+      
+
+        $query = "SELECT * FROM tags";
+        $result = mysqli_query($mysqli, $query);
+      
+        while ($row = mysqli_fetch_assoc($result)) {
+            
+            echo '   
+               <div class="content-tags">
+                <a href="" class="btn btn-primary btn-tags">#'. $row['nombre'] .'</a>
+                    
+            </div>';
+
+        }
+
+    }
+}
+
+
+if (!function_exists('buscar_archivos_por_tags')) {
+    function buscar_archivos_por_tags($tags) {
+        global $mysqli;
+
+        // Verificar que hay tags para buscar
+        if (empty($tags)) {
+            return [];
+        }
+
+        // Crear un string de placeholders para la consulta preparada
+        $placeholders = implode(',', array_fill(0, count($tags), '?'));
+
+        // Preparar la consulta SQL
+        $sql = "
+            SELECT a.* FROM archivos a
+            JOIN archivo_tag at ON a.id = at.archivo_id
+            JOIN tags t ON at.tag_id = t.id
+            WHERE t.nombre IN ($placeholders)
+            GROUP BY a.id
+            HAVING COUNT(DISTINCT t.id) = ?
+        ";
+
+        // Preparar la declaración
+        $stmt = $mysqli->prepare($sql);
+
+        // Verificar si la declaración fue preparada correctamente
+        if ($stmt === false) {
+            die('Error en la preparación de la consulta: ' . $mysqli->error);
+        }
+
+        // Crear los tipos y valores para bind_param
+        $types = str_repeat('s', count($tags)) . 'i';
+        $params = array_merge($tags, [count($tags)]);
+        $stmt->bind_param($types, ...$params);
+
+        // Ejecutar la declaración y verificar su éxito
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Obtener y retornar los resultados en un array asociativo
+        $archivos = [];
+        while ($row = $result->fetch_assoc()) {
+            $archivos[] = $row;
+        }
+
+        // Cerrar la declaración y retornar los archivos encontrados
+        $stmt->close();
+        return $archivos;
+    }
+}
+
+
 /*
 //Send Notification
 if (!function_exists('send_notification')) {

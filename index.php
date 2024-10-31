@@ -39,7 +39,7 @@ if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
 </div> 
 </div>
 
- <!-- ====================  BEGIN: initialize add-to-homescreen library  ==================== 
+ <!-- ====================  BEGIN: initialize add-to-homescreen library  ==================== -->
 
     <script>
       window.addEventListener("load", function () {
@@ -54,7 +54,7 @@ if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
         window.AddToHomeScreenInstance.show("es"); // popup is only shown if web app is not already added to homescreen
       });
     </script>
-  ====================  END: initialize add-to-homescreen library  ==================== -->
+ <!-- ====================  END: initialize add-to-homescreen library  ==================== -->
  
 </body>
 </html>
