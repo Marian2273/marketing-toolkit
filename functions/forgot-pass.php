@@ -48,8 +48,7 @@ $apellido = $row['apellido'];
 $name= $nombre .' '. $apellido;
 
 if($total_all == '0'){
- echo '<span class="error">El correo electrónico ingresado no está registrado en nuestra base de datos. <br> 
- <br> Gracias.</span>';
+ echo '<span class="error">El email que ingresaste no está registrado en nuestra base.</span>';
 } else if($email ==''){
 echo '<span class="error"> Por favor, ingrese su email.</span>';
 
@@ -64,7 +63,7 @@ WHERE email LIKE '$email' ";
 mysqli_query($mysqli,$sql);
 
 
-$subject = "Recuperación de contraseña - IT Patagonia ";
+$subject = "Recuperación de contraseña - Marketing";
 $text = '<h3> Su nueva contraseña es la siguiente:</h3>
 <p> Usuario:  '. $email .' </p>
 <p><strong> Nueva Clave:  '. $password.' </strong></p> ';
@@ -75,14 +74,18 @@ $text = '<h3> Su nueva contraseña es la siguiente:</h3>
  $mail = new PHPMailer();
  $mail->isSMTP();
  $mail->Host = 'smtp.gmail.com';  // Servidor SMTP de Gmail
+ //$mail->Host = 'mail.freecanelo.com.ar';  // Servidor SMTP Hostinger
  $mail->SMTPAuth = true;
- $mail->Username = 'marianabelgrano@gmail.com';
- $mail->Password =  'aqfi xuid rlfn dsmv';  // Contraseña
  
+ $mail->Username = 'web@itpatagonia.com';
+ $mail->Password =  'cvyc boch tyjw bxjr';  // Contraseña
+ //$mail->Username = 'ayuda@freecanelo.com.ar';
+ //$mail->Password =  'Ayuda4ever!';  // Contraseña
  $mail->Port = 587; // O 465 para SSL
+ //$mail->Port = 465; // O 465 para SSL
 
 
- $mail->From = 'marketing@itpatagonia.com';  // Desde donde enviamos (Para mostrar)
+ $mail->From = 'web@itpatagonia.com';  // Desde donde enviamos (Para mostrar)
  $mail->FromName = "Restablecer la contraseña - Marketing Toolkit";
  $mail->AddAddress($email); // Esta es la dirección a donde enviamos
  //$mail->AddCC("cuenta@dominio.com"); // Copia
@@ -118,7 +121,7 @@ if($exito){
 
 }else{ 
     echo 'Mailer Error: ' . $mail->ErrorInfo;
- //echo '<span class="error"> Se produjo un error al enviar el correo electrónico. Vuelva a intentarlo más tarde. <br> Gracias .</span>';
+    //echo '<span class="error"> Hubo un error al enviar el email. Por favor, intentá nuevamente.</span>';
 
 }
 }

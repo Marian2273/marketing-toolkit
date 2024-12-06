@@ -45,7 +45,7 @@ if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
             <div class="w3l-form-info" >
                 <div class="w3_info">
                <h1>¡Hola!</h1>
-                <h2>Olvidaste tu contraseña</h2>
+                <h2>Resetear contraseña</h2>
                     <form   method="post" action="#" id="formularioolvido" >
                         <div class="form-group input-group  has-success">
                           
@@ -66,7 +66,7 @@ if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
                     <p class="account blanco"> <a href="login.php"> Ya tengo usuario </a></p>
                     <p class="account"> <a href="registro.php"> No tengo usuario </a></p>
 
-                    <p class="aclaracion"> Si tenés algún probelma escribinos: <br> <a href="mailto:marketing@itpatagonia.com" target="_blank" >marketing@itpatagonia.com</a> </p>
+                    <p class="aclaracion"> Si tenés algún problema escribinos: <br> <a href="mailto:marketing@itpatagonia.com" target="_blank" >marketing@itpatagonia.com</a> </p>
                 </div>
                
             </div>
@@ -76,7 +76,7 @@ if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
 
             
      
-    </main>
+
     
 
      <script src="js/jquery.form.min.js"></script>

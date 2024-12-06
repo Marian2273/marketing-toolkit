@@ -74,7 +74,7 @@ function buscar() {
 <div class="articulos section-wrapper favoritos" >
     <div class="promo">
         <div class="">
-            <h3 class="fav"><span class="las la-file-alt"></span> Últimos artículos</h3>
+            <h3 class="fav"><span class="las la-file-alt"></span> Blog</h3>
             <a href="https://itpatagonia.com/blog/" class="btn btn-primary btn-tags mas" target="_blank" >+ artículos</a>
         </div>
         
@@ -93,7 +93,7 @@ function buscar() {
 
          
 
-
+<?php include ("includes/categorias.php");?>
 
 <!-- Popular tags -->
 <div class="tags section-wrapper" >

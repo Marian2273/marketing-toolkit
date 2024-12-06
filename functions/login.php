@@ -1,13 +1,6 @@
 <?php
-session_start();
 include("../config/connect1.php");
 error_reporting(0);
-/*
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-die();
-*/
 
 $email=$_POST['email'];
 $password=$_POST['password'];

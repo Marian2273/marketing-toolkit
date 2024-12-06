@@ -18,7 +18,7 @@ $filename = substr(strrchr($path, "/"), 1);
 
 //Usuario Session
 $user_toolkit=$_SESSION["user_toolkit"];
-
+$url= $config['url'];
 
 //Proteger de los no logueados
 if (!isset($_SESSION["user_toolkit"]) || $_SESSION["user_toolkit"] !== $user_toolkit) {
@@ -50,11 +50,7 @@ $iconos = [
         'blanco' => 'img/Iconos_Botonera-21.png',
          'link' => 'toolkit.php'
     ],
-    'perfil' => [
-        'azul' => 'img/Iconos_Botonera-18.png',
-        'blanco' => 'img/Iconos_Botonera-22.png',
-         'link' => 'functions/logout.php'
-    ],
+    
     'categorias' => [
         'azul' => 'img/Iconos_Botonera-19.png',
         'blanco' => 'img/Iconos_Botonera-23.png',
@@ -64,6 +60,11 @@ $iconos = [
         'azul' => 'img/Iconos_Botonera-20.png',
         'blanco' => 'img/Iconos_Botonera-24.png',
          'link' => 'notas.php'
+    ],
+    'perfil' => [
+        'azul' => 'img/Iconos_Botonera-18.png',
+        'blanco' => 'img/Iconos_Botonera-22.png',
+         'link' => 'functions/logout.php'
     ]
 ];
 
@@ -116,10 +117,47 @@ if (!function_exists('get_user_info')) {
     }
 }
 
+//Seccion Novedades
+if (!function_exists('get_novedades')) {
+    function get_novedades() {
+        global $mysqli;
+        global $url;
+        $user_toolkit=$_SESSION["user_toolkit"];
+       
+
+        $query = "SELECT * FROM archivos  where id_novedades LIKE 1 ORDER BY id DESC";
+        $result = mysqli_query($mysqli, $query);
+      
+        while ($row = mysqli_fetch_assoc($result)) {
+            
+            echo '    <div class="promo-item" >
+                  
+            <div class="promo-info">
+                <img src="'.$row['imagen'] .'" class="img-responsive" />
+                <p>'. $row['nombre'] .'</p>
+                <div class="seccion-compartir">
+                    <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20'.$url.'/'.$row['link'] .'" target="_blank">
+                        <img src="img/whatsapp_icon.png" class="compartir" />
+                    </a>
+                     <a href="mailto:?subject=Te Comparto este Artículo&body=' . urlencode($url.'/'.$row['link']) . '" target="_blank"><img src="img/envelope_email_icon.png" class="compartir" /></a>
+                    <button class="like-btn" id="like-btn" data-postid="'. $row['id'] .'" data-userid="'. $user_toolkit .'">
+                    <span id="heart" class="heart las la-heart"> </span> <!-- Corazón vacío -->
+                    </button>
+
+                </div>
+            </div>
+        </div>';
+
+        }
+
+    }
+}
+
 //Seccion favoritos
 if (!function_exists('get_favoritos')) {
     function get_favoritos() {
         global $mysqli;
+        global $url;
         $user_toolkit=$_SESSION["user_toolkit"];
        
 
@@ -134,10 +172,10 @@ if (!function_exists('get_favoritos')) {
                 <img src="'.$row['imagen'] .'" class="img-responsive" />
                 <p>'. $row['nombre'] .'</p>
                 <div class="seccion-compartir">
-                    <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20https://freecanelo.com.ar/marketing-toolkit/'.$row['link'] .'" target="_blank">
+                    <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20'.$url.'/'.$row['link'] .'" target="_blank">
                         <img src="img/whatsapp_icon.png" class="compartir" />
                     </a>
-                     <a href="mailto:?subject=Te Comparto este Artículo&body=' . urlencode('https://freecanelo.com.ar/marketing-toolkit/' . $row['link']) . '" target="_blank"><img src="img/envelope_email_icon.png" class="compartir" /></a>
+                     <a href="mailto:?subject=Te Comparto este Artículo&body=' . urlencode($url.'/'.$row['link']) . '" target="_blank"><img src="img/envelope_email_icon.png" class="compartir" /></a>
                     <button class="like-btn" id="like-btn" data-postid="'. $row['id'] .'" data-userid="'. $user_toolkit .'">
                     <span id="heart" class="heart las la-heart"> </span> <!-- Corazón vacío -->
                     </button>
@@ -150,15 +188,78 @@ if (!function_exists('get_favoritos')) {
 
     }
 }
+//Fetch de favoritos real
+//Seccion favoritos
+if (!function_exists('get_favoritos_real')) {
+    function get_favoritos_real() {
+        global $mysqli;
+        global $url;
+
+        if (!isset($_SESSION["user_toolkit"])) {
+            echo "Usuario no autenticado.";
+            return;
+        }
+
+        $user_toolkit = $_SESSION["user_toolkit"];
+
+        // Consulta SQL preparada para evitar inyección
+        $query = "
+    SELECT a.*, l.liked
+    FROM archivos a
+    INNER JOIN likes l ON a.id = l.post_id
+    WHERE l.liked = 1
+      AND l.user_id = ?
+";
+
+
+        if ($stmt = $mysqli->prepare($query)) {
+            $stmt->bind_param('i', $user_toolkit);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+           while ($row = $result->fetch_assoc()) {
+    // Escapar datos para seguridad
+    $archivo_id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
+    $nombre = htmlspecialchars($row['nombre'], ENT_QUOTES, 'UTF-8');
+    $link = htmlspecialchars($row['link'], ENT_QUOTES, 'UTF-8');
+    $imagen = htmlspecialchars($row['imagen'], ENT_QUOTES, 'UTF-8');
+    $liked = (int)$row['liked']; // Asegúrate de que sea un valor entero
+
+    // Generar el contenido HTML
+    echo '<div class="promo-item">
+            <div class="promo-info">
+                <img src="' . $imagen . '" class="img-responsive" alt="' . $nombre . '" />
+                <p>' . $nombre . '</p>
+                <div class="seccion-compartir">
+                    <a href="https://wa.me/?text=Mira%20este%20archivo:%20' . urlencode($url . '/' . $link) . '" target="_blank">
+                        <img src="img/whatsapp_icon.png" class="compartir" alt="Compartir en WhatsApp" />
+                    </a>
+                    <a href="mailto:?subject=Te Comparto este Artículo&body=' . urlencode($url . '/' . $link) . '" target="_blank">
+                        <img src="img/envelope_email_icon.png" class="compartir" alt="Compartir por correo" />
+                    </a>
+                    <button class="like-btn" data-postid="' . $archivo_id . '" data-userid="' . $user_toolkit . '">
+                        <span class="heart las la-heart ' . ($liked === 1 ? 'liked' : '') . '"></span>
+                    </button>
+                </div>
+            </div>
+        </div>';
+}
+
+
+            $stmt->close();
+        } else {
+            echo "Error en la consulta: " . $mysqli->error;
+        }
+    }
+}
+
 
 //Seccion Notas Blog
 if (!function_exists('get_notas')) {
     function get_notas() {
         global $mysqli;
-        $id = $id;
-      
 
-        $query = "SELECT * FROM notas";
+        $query = "SELECT * FROM notas ORDER BY id DESC";
         $result = mysqli_query($mysqli, $query);
       
         while ($row = mysqli_fetch_assoc($result)) {
@@ -168,7 +269,7 @@ if (!function_exists('get_notas')) {
             <div class="promo-info">
                 <img src="'.$row['imagen'] .'" class="nota-img" />
                 <p>'. $row['nombre'] .'</p>
-                <a href="'. $row['link'] .'" class="btn-nota"  target="_blank"> Ir a la Nota </a>
+                <a href="'. $row['link'] .'" class="btn-nota"  target="_blank"> Leer más</a>
                
             </div>
         </div>';
@@ -183,7 +284,7 @@ if (!function_exists('get_notas')) {
 if (!function_exists('get_tags')) {
     function get_tags() {
         global $mysqli;
-        $id = $id;
+        
       
 
         $query = "SELECT * FROM tags";
@@ -199,6 +300,75 @@ if (!function_exists('get_tags')) {
 
         }
 
+    }
+}
+
+//Fetch de favoritos real
+//Seccion favoritos
+if (!function_exists('get_favoritos_real')) {
+    function get_favoritos_real() {
+        global $mysqli;
+        global $url;
+
+        if (!isset($_SESSION["user_toolkit"])) {
+            echo "Usuario no autenticado.";
+            return;
+        }
+
+        $user_toolkit = $_SESSION["user_toolkit"];
+
+        // Consulta SQL preparada para evitar inyección
+        $query = "
+            SELECT 
+                a.id AS archivo_id,
+                a.nombre,
+                a.link,
+                a.imagen,
+                a.id_categoria,
+                a.id_novedades,
+                a.date,
+                COALESCE(l.liked, 0) AS liked
+            FROM archivos a
+            LEFT JOIN likes l ON a.id = l.post_id AND l.user_id = ?
+        ";
+
+        if ($stmt = $mysqli->prepare($query)) {
+            $stmt->bind_param('i', $user_toolkit);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+                // Escapar datos para seguridad
+                $archivo_id = htmlspecialchars($row['archivo_id'], ENT_QUOTES, 'UTF-8');
+                $nombre = htmlspecialchars($row['nombre'], ENT_QUOTES, 'UTF-8');
+                $link = htmlspecialchars($row['link'], ENT_QUOTES, 'UTF-8');
+                $imagen = htmlspecialchars($row['imagen'], ENT_QUOTES, 'UTF-8');
+                $liked = (int) $row['liked'];
+
+                // Generar el contenido HTML
+                echo '<div class="promo-item">
+                        <div class="promo-info">
+                            <img src="' . $imagen . '" class="img-responsive" alt="' . $nombre . '" />
+                            <p>' . $nombre . '</p>
+                            <div class="seccion-compartir">
+                                <a href="https://wa.me/?text=Mira%20este%20archivo:%20' . urlencode($url . '/' . $link) . '" target="_blank">
+                                    <img src="img/whatsapp_icon.png" class="compartir" alt="Compartir en WhatsApp" />
+                                </a>
+                                <a href="mailto:?subject=Te Comparto este Artículo&body=' . urlencode($url . '/' . $link) . '" target="_blank">
+                                    <img src="img/envelope_email_icon.png" class="compartir" alt="Compartir por correo" />
+                                </a>
+                                <button class="like-btn" data-postid="' . $archivo_id . '" data-userid="' . $user_toolkit . '">
+                                    <span class="heart las la-heart ' . ($liked ? 'liked' : '') . '"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>';
+            }
+
+            $stmt->close();
+        } else {
+            echo "Error en la consulta: " . $mysqli->error;
+        }
     }
 }
 

@@ -2,11 +2,12 @@
 session_start();
 $user_toolkit=$_SESSION["user_toolkit"];
 error_reporting(0);
+include("config/connect.php"); 
+
 // Conexión a la base de datos
-//$conexion = new mysqli("localhost", "root", "root", "toolkit");
-$conexion = new mysqli('localhost', 'canisped_user_toolkit', 'Toolkit4ever!', 'canisped_toolkit');
-//$url= 'http://localhost:8888/';
-$url= 'https://freecanelo.com.ar/';
+$conexion = new mysqli($config['servername'],$config['username'],$config['password'],$config['dbname']);
+
+$url= $config['url'];
 
 $actual_link = $_SERVER['PHP_SELF'];
 $path = parse_url($actual_link , PHP_URL_PATH);
@@ -28,16 +29,17 @@ $resultado = $stmt->get_result();
 // Mostrar resultados
 if ($resultado->num_rows > 0) {
     while ($fila = $resultado->fetch_assoc()) {
-     echo '    <div class="promo-item" >
+     echo '     
+     <div class="promo-item" >
                   
                     <div class="promo-info">
                         <img src="'.$fila['imagen'] .'" class="img-responsive" />
                         <p>'. $fila['nombre'] .'</p>
                         <div class="seccion-compartir">
-                    <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20'.$url.'/marketing-toolkit/'.$fila['link'] .'" target="_blank">
+                    <a href="https://wa.me/?text=Mira%20este%20archivo%20PDF:%20'.$url.'/'.$fila['link'] .'" target="_blank">
                         <img src="img/whatsapp_icon.png" class="compartir" />
                     </a>
-                     <a href="mailto:?subject=Te Comparto este Artículo&body=' . urlencode($url.'/marketing-toolkit/'. $fila['link']) . '" target="_blank"><img src="img/envelope_email_icon.png" class="compartir" /></a>
+                     <a href="mailto:?subject=Te Comparto este Artículo&body=' . urlencode($url.'/'.$fila['link']) . '" target="_blank"><img src="img/envelope_email_icon.png" class="compartir" /></a>
                     <button class="like-btn" id="like-btn" data-postid="'. $fila['id'] .'" data-userid="'. $user_toolkit .'">
                     <span id="heart" class="heart las la-heart"> </span> <!-- Corazón vacío -->
                     </button>
@@ -48,7 +50,8 @@ if ($resultado->num_rows > 0) {
        
     }
 } else {
-    echo "No se encontraron resultados.";
+    
+    echo "No hay resultados para tu búsqueda.";
 }
 
 $stmt->close();

@@ -69,13 +69,11 @@ $('document').ready(function () {
                             url: 'functions/login.php',
                             data: formData,
                             success: function (html) {
-                                if (html == 'true') {
-                                  window.location = "toolkit.php";
-                                 
-
+                                if (html.trim() === 'true') {
+                                    // Cambia "nueva_pagina.php" por la ruta que desees
+                                    window.location.href = "toolkit.php";
                                 } else {
                                     $("#add_err").html(html);
-
                                 }
                             },
                             beforeSend: function () {

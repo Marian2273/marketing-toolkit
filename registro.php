@@ -90,7 +90,7 @@ if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
               
             </div>
            
-
+            <p class="aclaracion"> Si tenés algún problema escribinos: <br> <a href="mailto:marketing@itpatagonia.com" target="_blank" >marketing@itpatagonia.com</a> </p>
             
      
     </main>

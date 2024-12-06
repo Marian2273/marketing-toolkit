@@ -136,7 +136,7 @@ $("#formulario-registro").validate({
                                                                 success: function (html) {
                                                                     if (html == 'true') {
                                                                         Swal.fire({icon: 'success', 
-                                                                        title: '<span style="font-size:14px;"> Su Registro se realizó con éxito <br> Muchas Gracias! </span>', 
+                                                                        title: '<span style="font-size:14px;"> Recibimos tu pedido de registro. </span>', 
                                                                         showConfirmButton: true, 
                                                                         confirmButtonColor: '#0635AF', 
                                                                          }).then(function(){ 

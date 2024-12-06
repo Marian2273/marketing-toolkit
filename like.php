@@ -1,7 +1,12 @@
 <?php
-// Conectar a la base de datos
-$conn = new mysqli('localhost', 'root', 'root', 'toolkit');
-//$conn = new mysqli('localhost', 'canisped_user_toolkit', 'Toolkit4ever!', 'canisped_toolkit');
+include("config/connect.php"); 
+$conn = new mysqli($config['servername'],$config['username'],$config['password'],$config['dbname']);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// ... tu código que usa la conexión a la base de datos ...
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
@@ -28,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->execute()) {
         echo json_encode(['success' => true]);
     } else {
-        echo json_encode(['success' => false]);
+        echo json_encode(['success' => false, 'error' => $stmt->error]);
     }
 
     $stmt->close();

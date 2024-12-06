@@ -20,35 +20,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="js/jquery.min.js"></script>
 
-<!-- //js -->
-<script>
-// Escuchar el evento 'keydown' en el campo de entrada
-document.getElementById('busqueda').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {  // Detecta la tecla Enter
-        event.preventDefault();   // Evita el comportamiento predeterminado
-        buscar();                 // Llama a la función buscar
-    }
-});
-
-function buscar() {
-    const query = document.getElementById('busqueda').value;
-
-    // Crear la petición AJAX
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'buscar.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    xhr.onload = function () {
-        if (this.status === 200) {
-            document.getElementById('resultados').innerHTML = this.responseText;
-        }
-    };
-
-    // Enviar los datos de la búsqueda
-    xhr.send('query=' + encodeURIComponent(query));
-}
-
-</script>
 </head>
 
 <body class="toolkit">
@@ -72,88 +43,16 @@ function buscar() {
 <main>   
     <!-- Favoritos -->
 <div class="favoritos section-wrapper">
-        <div class="promo">
-            <h3 class="fav titulo-categorias"> <img src="img/Iconos_Botonera-19.png" class="icono-categoria"/> <span> Archivos </span> </h3>
-            <div class="items promo-items" id="resultados">
-               <?php get_favoritos(); ?>
 
-            
-            </div>
-        </div>
-    </div>
+<!-- Contenedor donde se mostrarán los resultados -->
+<div class="items promo-items" id="resultados"> </div>
+    <div class="items promo-items" id="results"> </div>
 </div>    
 <!-- ..// Fin de Favoritos -->
 
-         
 
-<!-- Categorias -->
-<div class="categorias section-wrapper" >
-    <div class="promo">
-        <h3 class="fav">  <span class="las la-star"></span> Categorías
-        </h3>
-          <div class="logos-categorias">
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-05.png"></a>
-                    <p>Mainframe</p>
-            </div>
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-09.png"></a>
-                    <p>Cobol Studio</p>
-            </div>
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-08.png"></a>
-                    <p>Data Innovation</p>
-            </div>
-        </div>  
+<?php include ("includes/categorias.php");?>
 
-        <div class="logos-categorias">
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-10.png"></a>
-                    <p>Software Studio</p>
-            </div>
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-11.png"></a>
-                    <p>IT Services</p>
-            </div>
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-12.png"></a>
-                    <p>Learning Services</p>
-            </div>
-        </div>  
-
-        <div class="logos-categorias">
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-13.png"></a>
-                    <p>Digital Talent</p>
-            </div>
-            <div class="mainframe">
-            <a href=""><img src="img/Iconos_Categoria-15.png"></a>
-                    <p>Data center</p>
-            </div>
-            <div class="mainframe">
-            <a href=""><img src="img/Iconos_Categoria-14.png"></a>
-                    <p>Empresa B</p>
-            </div>
-        </div>  
-
-        <div class="logos-categorias">
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-16.png"></a>
-                    <p>OPTI</p>
-            </div>
-            <div class="mainframe">
-            <a href=""><img src="img/Iconos_Categoria-18.png"></a>
-                    <p>Centreon</p>
-            </div>
-            <div class="mainframe">
-            <a href=""><img src="img/Iconos_Categoria-17.png"></a>
-                    <p>Dataiku</p>
-            </div>
-        </div>  
-
-    </div>  
-</div>
-<!-- ..// fin categorias -->
 
 <!-- Popular tags -->
 <div class="tags section-wrapper" >
@@ -207,6 +106,62 @@ function buscar() {
 });
 
 </script>  
+<script>
+        $(document).ready(function() {
+            $('.search-link').on('click', function(e) {
+                e.preventDefault(); // Evita que el enlace recargue la página
+                
+                // Obtén el id_categoria desde el atributo data
+                let idCategoria = $(this).data('id-categoria');
+                
+                // Realiza la petición AJAX
+                $.ajax({
+                    url: 'buscar-categoria.php', // Archivo PHP que procesará la solicitud
+                    type: 'GET',
+                    data: { id_categoria: idCategoria },
+                    success: function(response) {
+                        // Muestra los resultados en el div
+                        $('#results').html(response);
+                         // Desplazar la página hacia arriba
+                        $('html, body').animate({
+                        scrollTop: 0
+                        }, 500); // 500 ms para el desplazamiento
+                    },
+                    
+                    error: function() {
+                        $('#results').html('<p>Error al realizar la búsqueda.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+// Escuchar el evento 'keydown' en el campo de entrada
+document.getElementById('busqueda').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {  // Detecta la tecla Enter
+        event.preventDefault();   // Evita el comportamiento predeterminado
+        buscar();                 // Llama a la función buscar
+    }
+});
 
+function buscar() {
+    const query = document.getElementById('busqueda').value;
+
+    // Crear la petición AJAX
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'buscar.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function () {
+        if (this.status === 200) {
+            document.getElementById('resultados').innerHTML = this.responseText;
+        }
+    };
+
+    // Enviar los datos de la búsqueda
+    xhr.send('query=' + encodeURIComponent(query));
+}
+
+</script>
 </body>
 </html>

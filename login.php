@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 session_start();
 
 if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
@@ -12,7 +11,7 @@ if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"/>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Marketing Toolkit</title>
     <link rel="manifest" crossorigin="use-credentials" href="manifest.json" />
     <link rel="stylesheet" href="dist/add-to-homescreen.min.css" />
@@ -70,7 +69,7 @@ if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
                    
                     <p class="account"> <a href="registro.php"> No tengo usuario </a></p>
 
-                    <p class="aclaracion"> Si tenés algún probelma escribinos: <br> <a href="mailto:marketing@itpatagonia.com" target="_blank" >marketing@itpatagonia.com</a> </p>
+                    <p class="aclaracion"> Si tenés algún problema escribinos: <br> <a href="mailto:marketing@itpatagonia.com" target="_blank" >marketing@itpatagonia.com</a> </p>
                 </div>
             </div>
               
@@ -79,25 +78,8 @@ if (isset($_SESSION['user_toolkit']) && !empty($_SESSION['user_toolkit'])) {
 
             
      
-    </main>
-    
-    
-    <!-- ====================  BEGIN: initialize add-to-homescreen library  ==================== 
 
-    <script>
-      window.addEventListener("load", function () {
-        window.AddToHomeScreenInstance = window.AddToHomeScreen({
-          appName: "Marketing Toolkit", // Name of the app. [Required]
-          appNameDisplay: "standalone", // Display position of the app name [Optional]
-          appIconUrl: "./dist/assets/sample/img/icono-toolkit.png", // App icon link (square, at least 40 x 40 pixels) [Required]
-          assetUrl: "dist/assets/img/", // Link to directory of library image assets [Required]
-          maxModalDisplayCount: -1, // If set, the modal will only show this many times [Optional. Default: -1 (no limit).]
-          // (Debugging: Use this.clearModalDisplayCount() to reset the count)
-        });
-        window.AddToHomeScreenInstance.show("es"); // popup is only shown if web app is not already added to homescreen
-      });
-    </script>
-  s ====================  END: initialize add-to-homescreen library  ==================== -->
+    
      <script src="js/jquery.form.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/validador-login.js"></script>

@@ -70,15 +70,28 @@ function buscar() {
 
     </header>
 <main>   
-    <!-- Favoritos -->
-<div class="favoritos section-wrapper">
+    <!-- Novedades -->
+    <div class="favoritos section-wrapper">
+    <div class="items promo-items" id="resultados"> </div>
+     <div class="promo">
+            <h3 class="fav">  <span class="las la-bullhorn"></span> Novedades</h3>
+            <div class="items promo-items" >
+            <?php get_novedades(); ?>
+            </div>
+        </div>
+    </div>
+</div>    
+<!-- ..// Fin de Novedades -->
+
+<div class="favoritos section-wrapper favoritos-real">
+ 
         <div class="promo">
             <h3 class="fav">  <span class="las la-heart"></span> Favoritos </h3>
-            <div class="items promo-items" id="resultados">
-               <?php get_favoritos(); ?>
-
+            <div class="items promo-items" >
+               <?php  get_favoritos_real(); ?>
+<!--  
                 <div class="promo-item" >
-              <!--    
+                
                     <div class="promo-info">
                         <img src="preview/preview-opti.png" class="img-responsive" />
                         <p> Pitch OPTI CEP </p>
@@ -146,7 +159,7 @@ function buscar() {
 <div class="articulos section-wrapper favoritos" >
     <div class="promo">
         <div class="">
-            <h3 class="fav"><span class="las la-file-alt"></span> Últimos artículos</h3>
+            <h3 class="fav"><span class="las la-file-alt"></span> Blog</h3>
             <a href="https://itpatagonia.com/blog/" class="btn btn-primary btn-tags mas" target="_blank" >+ artículos</a>
         </div>
         
@@ -162,75 +175,7 @@ function buscar() {
     </div>  
 </div>
 <!-- ..// fin articulos -->
-
-<!-- Categorias -->
-<div class="categorias section-wrapper" >
-    <div class="promo">
-        <h3 class="fav">  <span class="las la-star"></span> Categorías
-        </h3>
-          <div class="logos-categorias">
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-05.png"></a>
-                    <p>Mainframe</p>
-            </div>
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-09.png"></a>
-                    <p>Cobol Studio</p>
-            </div>
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-08.png"></a>
-                    <p>Data Innovation</p>
-            </div>
-        </div>  
-
-        <div class="logos-categorias">
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-10.png"></a>
-                    <p>Software Studio</p>
-            </div>
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-11.png"></a>
-                    <p>IT Services</p>
-            </div>
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-12.png"></a>
-                    <p>Learning Services</p>
-            </div>
-        </div>  
-
-        <div class="logos-categorias">
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-13.png"></a>
-                    <p>Digital Talent</p>
-            </div>
-            <div class="mainframe">
-            <a href=""><img src="img/Iconos_Categoria-15.png"></a>
-                    <p>Data center</p>
-            </div>
-            <div class="mainframe">
-            <a href=""><img src="img/Iconos_Categoria-14.png"></a>
-                    <p>Empresa B</p>
-            </div>
-        </div>  
-
-        <div class="logos-categorias">
-            <div class="mainframe">
-                <a href=""><img src="img/Iconos_Categoria-16.png"></a>
-                    <p>OPTI</p>
-            </div>
-            <div class="mainframe">
-            <a href=""><img src="img/Iconos_Categoria-18.png"></a>
-                    <p>Centreon</p>
-            </div>
-            <div class="mainframe">
-            <a href=""><img src="img/Iconos_Categoria-17.png"></a>
-                    <p>Dataiku</p>
-            </div>
-        </div>  
-
-    </div>  
-</div>
-<!-- ..// fin categorias -->
+<?php include ("includes/categorias.php");?>
 
 <!-- Popular tags -->
 <div class="tags section-wrapper" >

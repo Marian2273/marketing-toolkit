@@ -7,7 +7,7 @@ require_once __DIR__ . '/vendor/autoload.php'; // example path
 $antiXss = new AntiXSS();
 include("../config/connect1.php"); 
 
-
+$url=$config['url'];
 
 /*
 print_r($_POST);
@@ -81,12 +81,12 @@ else if($captchaResponse['success'] == '1'
                 '$apellido',
                 '$email',
                 '$hashPassword',
-                '1',
+                '0',
                 '$sec_code'
                 )";
                 mysqli_query($mysqli,$sql);
                 
-                
+                $id_user_mail = $mysqli->insert_id;
 
                 //print_r($mysqli->error_list);
                 //send Mail Validate
@@ -104,7 +104,10 @@ else if($captchaResponse['success'] == '1'
                 $url=$config['url'];
               */
                //send_notification($id_user, $mail_tem, $sec_code, $subject, $smtp, $userName,$pass, $port, $url);
-               echo "true";
+               
+              // echo "true";
+               require('envio.php');
+
                 }
                 else {
                  echo '<p> You are a Spammer! Refresh the page and try again </p>';
