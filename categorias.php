@@ -25,7 +25,7 @@
 <body class="toolkit">
 
 <header>
-        <nav>
+      <nav>
       
             <div class="info">
              <img src="img/logo-ITP_blanco.png" id="logo" />
@@ -33,11 +33,11 @@
           </div>
         </nav> 
 
-        <div class="search">
+       <!--   <div class="search">
         
             <input type="text" placeholder="Buscador" id="busqueda">
             <button class="btn-buscar" onclick="buscar()"><span class="las la-search"></span></button>
-        </div>
+        </div> -->
 
     </header>
 <main>   
@@ -100,7 +100,8 @@ if (isset($_GET['id'])) {
                         $('#results').html(response);
                           // Ocultar el div con la clase categorias
                         $('.espacio-abajo').fadeOut();  // Esto oculta el div con animación. Puedes usar .hide() si prefieres sin animación
-        
+                        // Agregar una clase al div de categorías o a cualquier otro elemento
+                        $('#results').addClass('espacio');  // Agregar clase 'searching' al div con la clase 'categorias'
                          // Desplazar la página hacia arriba
                         $('html, body').animate({
                         scrollTop: 0
@@ -136,7 +137,7 @@ function buscar() {
             document.getElementById('resultados').innerHTML = this.responseText;
         }
     };
-
+    $('#results').fadeOut();  // Esto oculta el div con animación. Puedes usar .hide() si prefieres sin animación
     // Enviar los datos de la búsqueda
     xhr.send('query=' + encodeURIComponent(query));
 }

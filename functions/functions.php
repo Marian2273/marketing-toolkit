@@ -373,12 +373,9 @@ if (!function_exists('get_favoritos_real')) {
 }
 
 
-//Categorias by ID
-
-
-// Sección favoritos
+//Categorias by IDX
 if (!function_exists('get_categorias_id')) {
-    function get_categorias_id($archivo_id = null) {
+    function get_categorias_id($categoria_id) {
         global $mysqli, $url;
 
         // Verificar autenticación
@@ -388,6 +385,7 @@ if (!function_exists('get_categorias_id')) {
         }
 
         $user_toolkit = (int)$_SESSION["user_toolkit"]; 
+        $categoria_id = (int)$categoria_id;
 
         // Crear consulta base
         $query = "
@@ -396,21 +394,12 @@ if (!function_exists('get_categorias_id')) {
             FROM archivos a
             LEFT JOIN likes l 
             ON a.id = l.post_id AND l.user_id = ?
+            WHERE a.id_categoria = ?
         ";
-
-        // Agregar filtro por archivo si se pasa un ID
-        if ($archivo_id !== null) {
-            $archivo_id = (int)$archivo_id;
-            $query .= " AND a.id = ?";
-        }
 
         if ($stmt = $mysqli->prepare($query)) {
             // Asignar parámetros según la consulta
-            if ($archivo_id !== null) {
-                $stmt->bind_param('ii', $user_toolkit, $archivo_id);
-            } else {
-                $stmt->bind_param('i', $user_toolkit);
-            }
+            $stmt->bind_param('ii', $user_toolkit, $categoria_id);
 
             $stmt->execute();
             $result = $stmt->get_result();

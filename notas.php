@@ -61,13 +61,13 @@ function buscar() {
             <p class="hola"> ¡Hola <?php echo   get_user_activo($user_toolkit); ?>!</p>
           </div>
         </nav> 
-
+<!--
         <div class="search">
         
             <input type="text" placeholder="Buscador" id="busqueda">
             <button class="btn-buscar" onclick="buscar()"><span class="las la-search"></span></button>
         </div>
-
+-->
     </header>
 <main>   
 <!-- Articulos -->
@@ -93,7 +93,7 @@ function buscar() {
 
          
 
-<?php include ("includes/categorias.php");?>
+<?php include ("includes/categorias-home.php");?>
 
 <!-- Popular tags -->
 <div class="tags section-wrapper" >
