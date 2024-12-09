@@ -373,6 +373,95 @@ if (!function_exists('get_favoritos_real')) {
 }
 
 
+//Categorias by ID
+
+
+// Sección favoritos
+if (!function_exists('get_categorias_id')) {
+    function get_categorias_id($archivo_id = null) {
+        global $mysqli, $url;
+
+        // Verificar autenticación
+        if (!isset($_SESSION["user_toolkit"])) {
+            echo "Usuario no autenticado.";
+            return;
+        }
+
+        $user_toolkit = (int)$_SESSION["user_toolkit"]; 
+
+        // Crear consulta base
+        $query = "
+            SELECT a.*, 
+                   IF(l.liked IS NULL, 0, l.liked) AS liked 
+            FROM archivos a
+            LEFT JOIN likes l 
+            ON a.id = l.post_id AND l.user_id = ?
+        ";
+
+        // Agregar filtro por archivo si se pasa un ID
+        if ($archivo_id !== null) {
+            $archivo_id = (int)$archivo_id;
+            $query .= " AND a.id = ?";
+        }
+
+        if ($stmt = $mysqli->prepare($query)) {
+            // Asignar parámetros según la consulta
+            if ($archivo_id !== null) {
+                $stmt->bind_param('ii', $user_toolkit, $archivo_id);
+            } else {
+                $stmt->bind_param('i', $user_toolkit);
+            }
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    // Escapar datos
+                    $archivo_id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
+                    $nombre = htmlspecialchars($row['nombre'], ENT_QUOTES, 'UTF-8');
+                    $link = htmlspecialchars($row['link'], ENT_QUOTES, 'UTF-8');
+                    $imagen = htmlspecialchars($row['imagen'], ENT_QUOTES, 'UTF-8');
+                    $liked = (int)$row['liked'];
+
+                    // Generar contenido HTML
+                    echo '
+                    <div class="promo-item">
+                        <div class="promo-info">
+                            <img src="' . $imagen . '" class="img-responsive" alt="' . $nombre . '" />
+                            <p>' . $nombre . '</p>
+                            <div class="seccion-compartir">
+                                <a href="https://wa.me/?text=Mira%20este%20archivo:%20' . urlencode($url . '/' . $link) . '" target="_blank">
+                                    <img src="img/whatsapp_icon.png" class="compartir" alt="Compartir en WhatsApp" />
+                                </a>
+                                <a href="mailto:?subject=Te Comparto este Artículo&body=' . urlencode($url . '/' . $link) . '" target="_blank">
+                                    <img src="img/envelope_email_icon.png" class="compartir" alt="Compartir por correo" />
+                                </a>
+                                <button class="like-btn" data-postid="' . $archivo_id . '" data-userid="' . $user_toolkit . '">
+                                    <span class="heart las la-heart ' . ($liked === 1 ? 'liked' : '') . '"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>';
+                }
+            } else {
+                echo "<p>No tienes archivos favoritos aún.</p>";
+            }
+
+            $stmt->close();
+        } else {
+            echo "Error en la consulta: " . $mysqli->error;
+        }
+    }
+}
+
+
+
+
+
+
+
+// Archivos por tag
 if (!function_exists('buscar_archivos_por_tags')) {
     function buscar_archivos_por_tags($tags) {
         global $mysqli;

@@ -57,3 +57,36 @@ if ($resultado->num_rows > 0) {
 $stmt->close();
 $conexion->close();
 ?>
+<script>
+   // Selecciona todos los botones de "like" en la página
+        document.querySelectorAll('.like-btn').forEach(button => {
+        button.addEventListener('click', function() {
+        const heart = this.querySelector('.heart');
+        const postId = this.getAttribute('data-postid');
+        const userId = this.getAttribute('data-userid');
+
+        // Cambia el estado visual del like
+        heart.classList.toggle('liked');
+
+        // Define el estado de "liked" (1 si está liked, 0 si no)
+        const liked = heart.classList.contains('liked') ? 1 : 0;
+
+        // Envía la información al servidor
+        fetch('like.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ postId, userId, liked })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log(`Like actualizado para post ${postId}`);
+            } else {
+                console.error('Error al actualizar el like');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+
+</script>  

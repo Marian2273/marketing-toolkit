@@ -47,11 +47,19 @@
 <!-- Contenedor donde se mostrarán los resultados -->
 <div class="items promo-items" id="resultados"> </div>
     <div class="items promo-items" id="results"> </div>
-</div>    
+  
 <!-- ..// Fin de Favoritos -->
+<div class="items promo-items espacio-abajo" >
+<?php
+// Uso de la función
 
-
-<?php include ("includes/categorias.php");?>
+if (isset($_GET['id'])) {
+    get_categorias_id($_GET['id']);
+}?>
+</div>  
+</div>  
+ <?php include ("includes/categorias.php");
+ ?>
 
 
 <!-- Popular tags -->
@@ -73,39 +81,7 @@
 
 
 <?php include('includes/nav-footer.php'); ?>
-    <script>
-   // Selecciona todos los botones de "like" en la página
-        document.querySelectorAll('.like-btn').forEach(button => {
-        button.addEventListener('click', function() {
-        const heart = this.querySelector('.heart');
-        const postId = this.getAttribute('data-postid');
-        const userId = this.getAttribute('data-userid');
-
-        // Cambia el estado visual del like
-        heart.classList.toggle('liked');
-
-        // Define el estado de "liked" (1 si está liked, 0 si no)
-        const liked = heart.classList.contains('liked') ? 1 : 0;
-
-        // Envía la información al servidor
-        fetch('like.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ postId, userId, liked })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log(`Like actualizado para post ${postId}`);
-            } else {
-                console.error('Error al actualizar el like');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-});
-
-</script>  
+   
 <script>
         $(document).ready(function() {
             $('.search-link').on('click', function(e) {
@@ -122,6 +98,9 @@
                     success: function(response) {
                         // Muestra los resultados en el div
                         $('#results').html(response);
+                          // Ocultar el div con la clase categorias
+                        $('.espacio-abajo').fadeOut();  // Esto oculta el div con animación. Puedes usar .hide() si prefieres sin animación
+        
                          // Desplazar la página hacia arriba
                         $('html, body').animate({
                         scrollTop: 0
@@ -163,5 +142,7 @@ function buscar() {
 }
 
 </script>
+
+
 </body>
 </html>

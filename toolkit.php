@@ -175,7 +175,7 @@ function buscar() {
     </div>  
 </div>
 <!-- ..// fin articulos -->
-<?php include ("includes/categorias.php");?>
+<?php include ("includes/categorias-home.php");?>
 
 <!-- Popular tags -->
 <div class="tags section-wrapper" >
