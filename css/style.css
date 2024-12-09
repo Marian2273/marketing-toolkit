@@ -1273,9 +1273,10 @@ overflow: hidden;
     padding-bottom: 50px;
    
 }
-.espacio-abajo{
+.espacio-abajo, .espacio{
 padding-bottom: 20px;
 margin-bottom: 50px;
+
 }
 .fav-categorias {
     
